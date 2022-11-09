@@ -10,9 +10,21 @@
         </div>
             
         <div id="fixtures" v-show="showFixturesForm">
-            {{currentFixture}}
+            <select name="sortBy" id="select" v-model="groupSelected">
+                <option value="All">All</option>
+                <option value="A">Group A</option>
+                <option value="B">Group B</option>
+                <option value="C">Group C</option>
+                <option value="D">Group D</option>
+                <option value="E">Group E</option>
+                <option value="F">Group F</option>
+                <option value="G">Group G</option>
+                <option value="H">Group H</option>
+
+              </select>
+          
             <table>
-                <tr v-for="fixture, index in groupFixtures">       
+                <tr v-for="fixture, index in filteredGroupFixtures">       
                     <td>{{ fixture.date }}</td>
                     <td>{{ fixture.time }}</td>
                     <td>Group {{ fixture.group }}</td>
@@ -62,11 +74,11 @@
 const app = new Vue({
     el: '#app',
     data: {
-        currentFixture: {},
         showHomeForm: true,
         showFixturesForm: false,
         showGroupsForm: false,
         showKnockoutsForm: false,
+        groupSelected: 'All',
         groups: [
             { 
                 "group": "A",
@@ -224,7 +236,7 @@ const app = new Vue({
                     team.goalsScored = 0;
                     team.goalsConceded = 0;
                 })
-            })
+            });
 
             this.groupFixtures.forEach(fixture => {
                 const getGroup = this.groups.filter(x => x.group === fixture.group);
@@ -242,7 +254,7 @@ const app = new Vue({
                 if(fixture.teamOneGoals > fixture.teamTwoGoals) {
                     teamOne.points += 3;
                 } 
-                
+
                 if(fixture.teamTwoGoals > fixture.teamOneGoals) {
                     teamTwo.points += 3;
                 } else {
@@ -252,17 +264,17 @@ const app = new Vue({
             });
         }
     },
-    computed: { 
-        sortedGroups() {
-            let sortedGroups = this.groups;
-            
-            sortedGroups = sortedGroups.sort((a,b) => {
-                return a.points - b.points;
-            })
-
-            console.log(sortedGroups)
+    computed: {
+    filteredGroupFixtures() {
+        let tempGroupFixtures = this.groupFixtures
+        
+        if(this.groupSelected === "All") {
+            return tempGroupFixtures;
         }
+        tempGroupFixtures = tempGroupFixtures.filter(f => f.group === this.groupSelected)
+        return tempGroupFixtures;
     }
+}
 })
 </script>
 

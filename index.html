@@ -10,18 +10,21 @@
         </div>
             
         <div id="fixtures" v-show="showFixturesForm">
+            {{currentFixture}}
             <table>
                 <tr v-for="fixture, index in groupFixtures">       
                     <td>{{ fixture.date }}</td>
                     <td>{{ fixture.time }}</td>
                     <td>Group {{ fixture.group }}</td>
-                    <td><input type="number" v-model=fixture.teamOneGoals min="0" @change="handleChange(fixture)"/> </td>
+                    <td><input type="number" v-model=fixture.teamOneGoals min="0" /> </td>
                     <td>{{ fixture.teamOne }} </td>
                     <td>vs </td>
                     <td>{{ fixture.teamTwo }} </td>
-                    <td><input type="number" v-model=fixture.teamTwoGoals min="0"  @change="handleChange(fixture)"/></td>
+                    <td><input type="number" v-model=fixture.teamTwoGoals min="0" /></td>
                 </tr>
             </table>
+
+            <button @click="submitScores">Submit scores</button>
         </div>
 
         <div id="groups" v-show="showGroupsForm">
@@ -59,6 +62,7 @@
 const app = new Vue({
     el: '#app',
     data: {
+        currentFixture: {},
         showHomeForm: true,
         showFixturesForm: false,
         showGroupsForm: false,
@@ -139,7 +143,54 @@ const app = new Vue({
         ],
         groupFixtures: [
             {"teamOne": "Qatar", "teamOneGoals": 0, "teamTwo": "Ecuador", "teamTwoGoals": 0, "date": "20-11-2022", "time": "19:00", "group": "A"},
+            {"teamOne": "England", "teamOneGoals": 0, "teamTwo": "Iran", "teamTwoGoals": 0, "date": "21-11-2022", "time": "13:00", "group": "B"},
             {"teamOne": "Senegal", "teamOneGoals": 0, "teamTwo": "Netherlands", "teamTwoGoals": 0, "date": "21-11-2022", "time": " 16:00", "group": "A"},
+            {"teamOne": "USA", "teamOneGoals": 0, "teamTwo": "Wales", "teamTwoGoals": 0, "date": "21-11-2022", "time": " 16:00", "group": "B"},
+            {"teamOne": "Argentina", "teamOneGoals": 0, "teamTwo": "Saudi Arabia", "teamTwoGoals": 0, "date": "22-11-2022", "time": " 10:00", "group": "C"},
+            {"teamOne": "Denmark", "teamOneGoals": 0, "teamTwo": "Tunisia", "teamTwoGoals": 0, "date": "22-11-2022", "time": " 13:00", "group": "D"},
+            {"teamOne": "Mexico", "teamOneGoals": 0, "teamTwo": "Poland", "teamTwoGoals": 0, "date": "22-11-2022", "time": " 16:00", "group": "C"},
+            {"teamOne": "France", "teamOneGoals": 0, "teamTwo": "Australia", "teamTwoGoals": 0, "date": "22-11-2022", "time": " 19:00", "group": "D"},
+            {"teamOne": "Morocco", "teamOneGoals": 0, "teamTwo": "Croatia", "teamTwoGoals": 0, "date": "23-11-2022", "time": " 10:00", "group": "F"},
+            {"teamOne": "Germany", "teamOneGoals": 0, "teamTwo": "Japan", "teamTwoGoals": 0, "date": "23-11-2022", "time": " 13:00", "group": "E"},
+            {"teamOne": "Spain", "teamOneGoals": 0, "teamTwo": "Costa Rica", "teamTwoGoals": 0, "date": "23-11-2022", "time": " 16:00", "group": "E"},
+            {"teamOne": "Belgium", "teamOneGoals": 0, "teamTwo": "Canada", "teamTwoGoals": 0, "date": "23-11-2022", "time": " 19:00", "group": "F"},
+            {"teamOne": "Switzerland", "teamOneGoals": 0, "teamTwo": "Cameroon", "teamTwoGoals": 0, "date": "24-11-2022", "time": " 10:00", "group": "G"},
+            {"teamOne": "Uruguay", "teamOneGoals": 0, "teamTwo": "South Korea", "teamTwoGoals": 0, "date": "24-11-2022", "time": " 13:00", "group": "H"},
+            {"teamOne": "Portugal", "teamOneGoals": 0, "teamTwo": "Ghana", "teamTwoGoals": 0, "date": "24-11-2022", "time": " 16:00", "group": "H"},
+            {"teamOne": "Brazil", "teamOneGoals": 0, "teamTwo": "Serbia", "teamTwoGoals": 0, "date": "24-11-2022", "time": " 19:00", "group": "G"},
+            {"teamOne": "Wales", "teamOneGoals": 0, "teamTwo": "Iran", "teamTwoGoals": 0, "date": "25-11-2022", "time": " 10:00", "group": "B"},
+            {"teamOne": "Qatar", "teamOneGoals": 0, "teamTwo": "Senegal", "teamTwoGoals": 0, "date": "25-11-2022", "time": " 13:00", "group": "A"},
+            {"teamOne": "Netherlands", "teamOneGoals": 0, "teamTwo": "Ecuador", "teamTwoGoals": 0, "date": "25-11-2022", "time": " 16:00", "group": "A"},
+            {"teamOne": "England", "teamOneGoals": 0, "teamTwo": "USA", "teamTwoGoals": 0, "date": "25-11-2022", "time": " 19:00", "group": "B"},
+            {"teamOne": "Tunisia", "teamOneGoals": 0, "teamTwo": "Australia", "teamTwoGoals": 0, "date": "26-11-2022", "time": " 10:00", "group": "D"},
+            {"teamOne": "Poland", "teamOneGoals": 0, "teamTwo": "Saudi Arabia", "teamTwoGoals": 0, "date": "26-11-2022", "time": " 13:00", "group": "C"},
+            {"teamOne": "France", "teamOneGoals": 0, "teamTwo": "Denmark", "teamTwoGoals": 0, "date": "26-11-2022", "time": " 16:00", "group": "D"},
+            {"teamOne": "Argentina", "teamOneGoals": 0, "teamTwo": "Mexico", "teamTwoGoals": 0, "date": "26-11-2022", "time": " 19:00", "group": "C"},
+            {"teamOne": "Japan", "teamOneGoals": 0, "teamTwo": "Costa Rica", "teamTwoGoals": 0, "date": "27-11-2022", "time": " 10:00", "group": "E"},
+            {"teamOne": "Belgium", "teamOneGoals": 0, "teamTwo": "Morocco", "teamTwoGoals": 0, "date": "27-11-2022", "time": " 13:00", "group": "F"},
+            {"teamOne": "Croatia", "teamOneGoals": 0, "teamTwo": "Canada", "teamTwoGoals": 0, "date": "27-11-2022", "time": " 16:00", "group": "F"},
+            {"teamOne": "Spain", "teamOneGoals": 0, "teamTwo": "Germany", "teamTwoGoals": 0, "date": "27-11-2022", "time": " 19:00", "group": "E"},
+            {"teamOne": "Cameroon", "teamOneGoals": 0, "teamTwo": "Serbia", "teamTwoGoals": 0, "date": "28-11-2022", "time": " 10:00", "group": "G"},
+            {"teamOne": "South Korea", "teamOneGoals": 0, "teamTwo": "Ghana", "teamTwoGoals": 0, "date": "28-11-2022", "time": " 13:00", "group": "H"},
+            {"teamOne": "Brazil", "teamOneGoals": 0, "teamTwo": "Switzerland", "teamTwoGoals": 0, "date": "28-11-2022", "time": " 16:00", "group": "G"},
+            {"teamOne": "Portugal", "teamOneGoals": 0, "teamTwo": "Uruguay", "teamTwoGoals": 0, "date": "28-11-2022", "time": " 19:00", "group": "H"},
+            {"teamOne": "Ecuador", "teamOneGoals": 0, "teamTwo": "Senegal", "teamTwoGoals": 0, "date": "29-11-2022", "time": " 15:00", "group": "A"},
+            {"teamOne": "Netherlands", "teamOneGoals": 0, "teamTwo": "Qatar", "teamTwoGoals": 0, "date": "2-11-2022", "time": " 15:00", "group": "A"},
+            {"teamOne": "Iran", "teamOneGoals": 0, "teamTwo": "USA", "teamTwoGoals": 0, "date": "29-11-2022", "time": " 19:00", "group": "B"},
+            {"teamOne": "Wales", "teamOneGoals": 0, "teamTwo": "England", "teamTwoGoals": 0, "date": "29-11-2022", "time": " 19:00", "group": "B"},
+            {"teamOne": "Tunisia", "teamOneGoals": 0, "teamTwo": "France", "teamTwoGoals": 0, "date": "30-11-2022", "time": " 15:00", "group": "D"},
+            {"teamOne": "Australia", "teamOneGoals": 0, "teamTwo": "Denmark", "teamTwoGoals": 0, "date": "30-11-2022", "time": " 15:00", "group": "D"},
+            {"teamOne": "Poland", "teamOneGoals": 0, "teamTwo": "Argentina", "teamTwoGoals": 0, "date": "30-11-2022", "time": " 19:00", "group": "C"},
+            {"teamOne": "Saudi Arabia", "teamOneGoals": 0, "teamTwo": "Mexico", "teamTwoGoals": 0, "date": "30-11-2022", "time": " 19:00", "group": "C"},
+            {"teamOne": "Croatia", "teamOneGoals": 0, "teamTwo": "Belgium", "teamTwoGoals": 0, "date": "01-12-2022", "time": " 15:00", "group": "F"},
+            {"teamOne": "Canada", "teamOneGoals": 0, "teamTwo": "Morocco", "teamTwoGoals": 0, "date": "01-12-2022", "time": " 15:00", "group": "F"},
+            {"teamOne": "Japan", "teamOneGoals": 0, "teamTwo": "Spain", "teamTwoGoals": 0, "date": "01-12-2022", "time": " 19:00", "group": "E"},
+            {"teamOne": "Costa Rica", "teamOneGoals": 0, "teamTwo": "Germany", "teamTwoGoals": 0, "date": "01-12-2022", "time": " 19:00", "group": "E"},
+            {"teamOne": "South Korea", "teamOneGoals": 0, "teamTwo": "Portugal", "teamTwoGoals": 0, "date": "02-12-2022", "time": " 15:00", "group": "H"},
+            {"teamOne": "Ghana", "teamOneGoals": 0, "teamTwo": "Uruguay", "teamTwoGoals": 0, "date": "02-12-2022", "time": " 15:00", "group": "H"},
+            {"teamOne": "Serbia", "teamOneGoals": 0, "teamTwo": "Switzerland", "teamTwoGoals": 0, "date": "02-12-2022", "time": " 19:00", "group": "G"},
+            {"teamOne": "Cameroon", "teamOneGoals": 0, "teamTwo": "Brazil", "teamTwoGoals": 0, "date": "02-12-2022", "time": " 19:00", "group": "G"},
+        
         ]
     },
     methods: {
@@ -166,50 +217,50 @@ const app = new Vue({
                     break;
             }
         },
-        handleChange(fixture) {
-            //change to changing single team at a time
-            const getGroup = this.groups.filter(x => x.group === fixture.group);
-            const group = getGroup[0];
-            console.log(group);
-            console.log(group.teams);
+        submitScores() {
+            this.groups.forEach(group => {
+                group.teams.forEach(team => {
+                    team.points = 0;
+                    team.goalsScored = 0;
+                    team.goalsConceded = 0;
+                })
+            })
 
-            const getTeamOne = group.teams.filter(x => x.name === fixture.teamOne);
-            const teamOne = getTeamOne[0];
-            console.log(teamOne);
+            this.groupFixtures.forEach(fixture => {
+                const getGroup = this.groups.filter(x => x.group === fixture.group);
+                const group = getGroup[0];
+                const getTeamOne = group.teams.filter(x => x.name === fixture.teamOne);
+                const teamOne = getTeamOne[0];
+                const getTeamTwo = group.teams.filter(x => x.name === fixture.teamTwo);
+                const teamTwo = getTeamTwo[0];
 
-            const getTeamTwo = group.teams.filter(x => x.name === fixture.teamTwo);
-            const teamTwo = getTeamTwo[0];
+                teamOne.goalsScored = fixture.teamOneGoals;
+                teamTwo.goalsScored = fixture.teamTwoGoals;
+                teamOne.goalsConceded = fixture.teamTwoGoals;
+                teamTwo.goalsConceded = fixture.teamOneGoals;
 
-            console.log(teamTwo);
-
-
-            teamOne.goalsScored = fixture.teamOneGoals;
-            teamTwo.goalsScored = fixture.teamTwoGoals;
-            teamOne.goalsConceded = fixture.teamTwoGoals;
-            teamTwo.goalsConceded = fixture.teamOneGoals;
-
-            if(fixture.teamOneGoals > fixture.teamTwoGoals) {
-                teamOne.points += 3;
-            } else if(fixture.teamTwoGoals > fixture.teamOneGoals) {
-                teamTwo.points += 3;
-            } else {
-                teamOne.points += 1;
-                teamTwo.points += 1;
-            }
-
-
-            console.log(this.groups);
-            // group.teams.pop(x => x.name === fixture.teamOne && x.name === fixture.teamTwo);
+                if(fixture.teamOneGoals > fixture.teamTwoGoals) {
+                    teamOne.points += 3;
+                } 
+                
+                if(fixture.teamTwoGoals > fixture.teamOneGoals) {
+                    teamTwo.points += 3;
+                } else {
+                    teamOne.points += 1;
+                    teamTwo.points += 1;
+                }
+            });
+        }
+    },
+    computed: { 
+        sortedGroups() {
+            let sortedGroups = this.groups;
             
-            // group.teams.push(teamOne);
-            // group.teams.push(teamTwo);
+            sortedGroups = sortedGroups.sort((a,b) => {
+                return a.points - b.points;
+            })
 
-            // group.teams.sort(x => x.points);
-
-            // console.log(group);
-
-            // this.groups.pop(x => x.group === fixture.group);
-            // this.groups.push(group);
+            console.log(sortedGroups)
         }
     }
 })

@@ -1,0 +1,178 @@
+<div id="app">
+    <button class="tablink" @click="showForm('Home')">Home</button>
+	<button class="tablink" @click="showForm('Fixtures')">Fixtures</button>
+    <button class="tablink" @click="showForm('Groups')">Groups</button>
+    <button class="tablink" @click="showForm('Knockouts')">Knockouts</button>
+
+    <main>
+        <div id="home" v-show="showHomeForm">
+            <p>Home Form</p>
+        </div>
+            
+        <div id="fixtures" v-show="showFixturesForm">
+            <table>
+                <tr v-for="fixture, index in groupFixtures">       
+                    <td>{{ fixture.date }}</td>
+                    <td>{{ fixture.time }}</td>
+                    <td>Group {{ fixture.group }}</td>
+                    <td><input type="number" v-model=fixture.teamOneGoals min="0" @change="handleChange(fixture)"/> </td>
+                    <td>{{ fixture.teamOne }} </td>
+                    <td>vs </td>
+                    <td>{{ fixture.teamTwo }} </td>
+                    <td><input type="number" v-model=fixture.teamTwoGoals min="0"  @change="handleChange(fixture)"/></td>
+                </tr>
+            </table>
+        </div>
+
+        <div id="groups" v-show="showGroupsForm">
+            <div v-for="group, index in groups">
+                    Group {{ group.group }}
+                
+                <table id="group">
+                    <thead>
+                        <th>Team</th>
+                        <th>Goals Scored</th>
+                        <th>Goals Conceded</th>
+                        <th>Points</th>
+                    </thead>
+                    <tr v-for="team in group.teams">
+                        <td>{{ team.name }}</td>
+                        <td>{{ team.goalsScored }}</td>
+                        <td>{{ team.goalsConceded }}</td>
+                        <td>{{ team.points }}</td>
+
+                    </tr>
+                </table>
+                <br/>
+            </div>
+        </div>
+
+        <div id="knockouts" v-show="showKnockoutsForm">
+            <p>Knockouts Form</p>
+        </div>
+    </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js"></script>
+
+<script>
+const app = new Vue({
+    el: '#app',
+    data: {
+        showHomeForm: true,
+        showFixturesForm: false,
+        showGroupsForm: false,
+        showKnockoutsForm: false,
+        groups: [
+            { 
+                "group": "A",
+                "teams" : [
+                    { "name": "Qatar", "points": 0, "goalsScored": 0, "goalsConceded": 0},
+                    { "name": "Ecuador", "points": 0, "goalsScored": 0, "goalsConceded": 0},
+                    { "name": "Senegal", "points": 0, "goalsScored": 0, "goalsConceded": 0},
+                    { "name": "Netherlands", "points": 0, "goalsScored": 0, "goalsConceded": 0}
+                ]
+            },
+            { 
+                "group": "B",
+                "teams" : [
+                    { "name": "England", "points": 0, "goalsScored": 0, "goalsConceded": 0},
+                    { "name": "Iran", "points": 0, "goalsScored": 0, "goalsConceded": 0},
+                    { "name": "USA", "points": 0, "goalsScored": 0, "goalsConceded": 0},
+                    { "name": "Wales", "points": 0, "goalsScored": 0, "goalsConceded": 0}
+                ]
+            },
+            { 
+                "group": "C",
+                "teams" : [
+                    { "name": "Argentina", "points": 0, "goalsScored": 0, "goalsConceded": 0},
+                    { "name": "Saudi Arabia", "points": 0, "goalsScored": 0, "goalsConceded": 0},
+                    { "name": "Mexico", "points": 0, "goalsScored": 0, "goalsConceded": 0},
+                    { "name": "Poland", "points": 0, "goalsScored": 0, "goalsConceded": 0}
+                ]
+            },
+            { 
+                "group": "D",
+                "teams" : [
+                    { "name": "France", "points": 0, "goalsScored": 0, "goalsConceded": 0},
+                    { "name": "Australia", "points": 0, "goalsScored": 0, "goalsConceded": 0},
+                    { "name": "Denmark", "points": 0, "goalsScored": 0, "goalsConceded": 0},
+                    { "name": "Tunisia", "points": 0, "goalsScored": 0, "goalsConceded": 0}
+                ]
+            },
+            { 
+                "group": "E",
+                "teams" : [
+                    { "name": "Spain", "points": 0, "goalsScored": 0, "goalsConceded": 0},
+                    { "name": "Costa Rica", "points": 0, "goalsScored": 0, "goalsConceded": 0},
+                    { "name": "Germany", "points": 0, "goalsScored": 0, "goalsConceded": 0},
+                    { "name": "Japan", "points": 0, "goalsScored": 0, "goalsConceded": 0}
+                ]
+            },
+            { 
+                "group": "F",
+                "teams" : [
+                    { "name": "Belgium", "points": 0, "goalsScored": 0, "goalsConceded": 0},
+                    { "name": "Canada", "points": 0, "goalsScored": 0, "goalsConceded": 0},
+                    { "name": "Morocco", "points": 0, "goalsScored": 0, "goalsConceded": 0},
+                    { "name": "Croatia", "points": 0, "goalsScored": 0, "goalsConceded": 0}
+                ]
+            },
+            { 
+                "group": "G",
+                "teams" : [
+                    { "name": "Brazil", "points": 0, "goalsScored": 0, "goalsConceded": 0},
+                    { "name": "Serbia", "points": 0, "goalsScored": 0, "goalsConceded": 0},
+                    { "name": "Switzerland", "points": 0, "goalsScored": 0, "goalsConceded": 0},
+                    { "name": "Cameroon", "points": 0, "goalsScored": 0, "goalsConceded": 0}
+                ]
+            },
+            { 
+                "group": "H",
+                "teams" : [
+                    { "name": "Portugal", "points": 0, "goalsScored": 0, "goalsConceded": 0},
+                    { "name": "Ghana", "points": 0, "goalsScored": 0, "goalsConceded": 0},
+                    { "name": "Uruguay", "points": 0, "goalsScored": 0, "goalsConceded": 0},
+                    { "name": "South Korea", "points": 0, "goalsScored": 0, "goalsConceded": 0}
+                ]
+            },
+        ],
+        groupFixtures: [
+            {"teamOne": "Qatar", "teamOneGoals": 0, "teamTwo": "Ecuador", "teamTwoGoals": 0, "date": "20-11-2022", "time": "19:00", "group": "A"},
+            {"teamOne": "Senegal", "teamOneGoals": 0, "teamTwo": "Netherlands", "teamTwoGoals": 0, "date": "21-11-2022", "time": " 16:00", "group": "A"},
+        ]
+    },
+    methods: {
+        showForm(formName) {
+            this.showHomeForm = false;
+            this.showFixturesForm = false;
+            this.showGroupsForm = false;
+            this.showKnockoutsForm = false;
+
+            switch(formName){
+                case 'Home':
+                    this.showHomeForm = true;
+                    break;
+                case 'Fixtures':
+                    this.showFixturesForm = true;
+                    break;
+                case 'Groups':
+                    this.showGroupsForm = true;
+                    break;
+                case 'Knockouts':
+                    this.showKnockoutsForm = true;
+                    break;
+                default:
+                    break;
+            }
+        },
+        handleChange(fixture) {
+            
+        }
+    }
+})
+</script>
+
+<style>
+    @import 'style.css';
+</style>

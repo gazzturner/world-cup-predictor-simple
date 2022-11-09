@@ -167,7 +167,49 @@ const app = new Vue({
             }
         },
         handleChange(fixture) {
+            //change to changing single team at a time
+            const getGroup = this.groups.filter(x => x.group === fixture.group);
+            const group = getGroup[0];
+            console.log(group);
+            console.log(group.teams);
+
+            const getTeamOne = group.teams.filter(x => x.name === fixture.teamOne);
+            const teamOne = getTeamOne[0];
+            console.log(teamOne);
+
+            const getTeamTwo = group.teams.filter(x => x.name === fixture.teamTwo);
+            const teamTwo = getTeamTwo[0];
+
+            console.log(teamTwo);
+
+
+            teamOne.goalsScored = fixture.teamOneGoals;
+            teamTwo.goalsScored = fixture.teamTwoGoals;
+            teamOne.goalsConceded = fixture.teamTwoGoals;
+            teamTwo.goalsConceded = fixture.teamOneGoals;
+
+            if(fixture.teamOneGoals > fixture.teamTwoGoals) {
+                teamOne.points += 3;
+            } else if(fixture.teamTwoGoals > fixture.teamOneGoals) {
+                teamTwo.points += 3;
+            } else {
+                teamOne.points += 1;
+                teamTwo.points += 1;
+            }
+
+
+            console.log(this.groups);
+            // group.teams.pop(x => x.name === fixture.teamOne && x.name === fixture.teamTwo);
             
+            // group.teams.push(teamOne);
+            // group.teams.push(teamTwo);
+
+            // group.teams.sort(x => x.points);
+
+            // console.log(group);
+
+            // this.groups.pop(x => x.group === fixture.group);
+            // this.groups.push(group);
         }
     }
 })

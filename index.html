@@ -20,9 +20,7 @@
                 <option value="F">Group F</option>
                 <option value="G">Group G</option>
                 <option value="H">Group H</option>
-
               </select>
-          
             <table>
                 <tr v-for="fixture, index in filteredGroupFixtures">       
                     <td>{{ fixture.date }}</td>
@@ -37,6 +35,27 @@
             </table>
 
             <button @click="submitScores">Submit scores</button>
+
+            <div v-if="groupSelected !== 'All'">
+               <div v-for="group, index in groups" v-if="group.group === groupSelected">
+                    <table id="group">
+                        <thead>
+                            <th>Team</th>
+                            <th>Goals Scored</th>
+                            <th>Goals Conceded</th>
+                            <th>Points</th>
+                        </thead>
+                        <tr v-for="team in group.teams">
+                            <td>{{ team.name }}</td>
+                            <td>{{ team.goalsScored }}</td>
+                            <td>{{ team.goalsConceded }}</td>
+                            <td>{{ team.points }}</td>
+
+                        </tr>
+                    </table>
+                    <br/>
+                </div>
+            </div>
         </div>
 
         <div id="groups" v-show="showGroupsForm">
@@ -246,10 +265,11 @@ const app = new Vue({
                 const getTeamTwo = group.teams.filter(x => x.name === fixture.teamTwo);
                 const teamTwo = getTeamTwo[0];
 
-                teamOne.goalsScored = fixture.teamOneGoals;
-                teamTwo.goalsScored = fixture.teamTwoGoals;
-                teamOne.goalsConceded = fixture.teamTwoGoals;
-                teamTwo.goalsConceded = fixture.teamOneGoals;
+                teamOne.goalsScored += fixture.teamOneGoals;
+                console.log(teamOne.name, teamOne.goalsScored)
+                teamTwo.goalsScored += fixture.teamTwoGoals;
+                teamOne.goalsConceded += fixture.teamTwoGoals;
+                teamTwo.goalsConceded += fixture.teamOneGoals;
 
                 if(fixture.teamOneGoals > fixture.teamTwoGoals) {
                     teamOne.points += 3;
